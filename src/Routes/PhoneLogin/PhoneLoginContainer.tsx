@@ -1,12 +1,12 @@
 import React from "react";
 import PhoneLoginPresenter from "./PhoneLoginPresenter";
 import { RouteComponentProps } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface IState {
   countryCode: string;
   phoneNumber: string;
 }
-interface IProps extends RouteComponentProps<any> {}
 class PhoneLoginContainer extends React.Component<
   RouteComponentProps<any>,
   IState
@@ -16,9 +16,8 @@ class PhoneLoginContainer extends React.Component<
     phoneNumber: ""
   };
   public render() {
-    console.log(this.state);
     return (
-      <PhoneLoginPresenter {...this.state} onInputChange={this.onInputChange} />
+      <PhoneLoginPresenter {...this.state} onInputChange={this.onInputChange} onSubmit={this.onSubmit} />
     );
   }
 
@@ -33,6 +32,17 @@ class PhoneLoginContainer extends React.Component<
       [name]: value
     } as any);
   };
+
+  public onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
+    const { countryCode, phoneNumber } = this.state;
+    const isValid = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(`${countryCode}${phoneNumber}`)
+    if(isValid){
+      return;
+    }else{
+      toast.error('전화번호가 유효하지 않습니다.')
+    }
+  }
 }
 
 export default PhoneLoginContainer;

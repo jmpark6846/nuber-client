@@ -57,13 +57,17 @@ const Button = styled.button`
 interface IProps {
   countryCode: string;
   phoneNumber: string;
-  onInputChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  onInputChange: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
   phoneNumber,
   countryCode,
-  onInputChange
+  onInputChange,
+  onSubmit
 }) => (
   <Container>
     <Helmet>
@@ -71,15 +75,24 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
     </Helmet>
     <BackArrowExtended backTo={"/"} />
     <Title>Enter your mobile number</Title>
-    <CountrySelect value={countryCode} name={"countryCode"} onChange={onInputChange}>
+    <CountrySelect
+      value={countryCode}
+      name={"countryCode"}
+      onChange={onInputChange}
+    >
       {countries.map((country, index) => (
         <CountryOption key={index} value={country.dial_code}>
           {country.flag} {country.name} ({country.dial_code})
         </CountryOption>
       ))}
     </CountrySelect>
-    <Form>
-      <Input placeholder={"053 690 2129"} value={phoneNumber} name={"phoneNumber"} onChange={onInputChange}/>
+    <Form onSubmit={onSubmit}>
+      <Input
+        placeholder={"053 690 2129"}
+        value={phoneNumber}
+        name={"phoneNumber"}
+        onChange={onInputChange}
+      />
       <Button>
         <svg
           xmlns="http://www.w3.org/2000/svg"
