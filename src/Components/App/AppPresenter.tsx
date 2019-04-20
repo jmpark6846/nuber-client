@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BrowserRouter, Route, Redirect } from "react-router-dom";
-import { Switch } from "react-native";
-import OutHome from "../../Routes/OutHome";
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import Login from "../../Routes/Login";
 import PhoneLogin from "../../Routes/PhoneLogin";
 import VerifyPhone from "../../Routes/VerifyPhone";
 import SocialLogin from "../../Routes/SocialLogin";
@@ -25,9 +24,9 @@ const AppPresenter: React.FunctionComponent<AppPresenterProps> = ({
   </BrowserRouter>
 );
 
-const LoggedInRoutes: React.FunctionComponent = () => (
+const LoggedOutRoutes: React.FunctionComponent = () => (
   <Switch>
-    <Route path={"/"} exact={true} component={OutHome} />
+    <Route path={"/"} exact={true} component={Login} />
     <Route path={"/phone-login"} component={PhoneLogin} />
     <Route path={"/verify-phone/:number"} component={VerifyPhone} />
     <Route path={"/social-login"} component={SocialLogin} />
@@ -35,7 +34,7 @@ const LoggedInRoutes: React.FunctionComponent = () => (
   </Switch>
 );
 
-const LoggedOutRoutes: React.FunctionComponent = () => (
+const LoggedInRoutes: React.FunctionComponent = () => (
   <Switch>
     <Route path={"/"} exact={true} component={Home} />
     <Route path={"/ride"} exact={true} component={Ride} />
